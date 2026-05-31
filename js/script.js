@@ -1,98 +1,132 @@
 // funcoes em javascript do trabalho de viagens
+// agência fortaleza - simulador e validador de orcamento para pacotes 2026
 
-var valorPacote = 0;
+var val_pacote = 0;
+var TAXA_EMBARQUE = 50.00; // taxa obrigatoria cobrada pela agencia em todos os pacotes
 
-// funcao que roda na pagina de destinos.html ao clicar no comprar
+// funcao de compra que cria a URL com dados do destino para o formulario
 function comprar(nomeDestino, preco) {
-    // envia as informacoes do pacote pela url para a pagina de orcamento
-    window.location.href = "orcamento.html?destino=" + encodeURIComponent(nomeDestino) + "&preco=" + preco;
+    try {
+        if (!nomeDestino || preco <= 0) {
+            throw new Error("Dados do destino invalidos para compra.");
+        }
+        // redireciona o usuario enviando as variaveis de preco e destino pela URL
+        window.location.href = "orcamento.html?destino=" + encodeURIComponent(nomeDestino) + "&preco=" + preco;
+    } catch (erro) {
+        console.error("erro no redirecionamento: " + erro.message);
+        alert("Nao foi possivel processar a escolha do destino. Tente novamente.");
+    }
 }
 
-// executa ao carregar qualquer uma das paginas
+// listener que monitora a inicializacao da pagina de orcamento
 document.addEventListener("DOMContentLoaded", function() {
-    // verifica se estamos na pagina de orcamento.html (se o form existe)
-    var formulario = document.getElementById("form_orc");
+    var formOrcamento = document.getElementById("form_orc");
     
-    if (formulario) {
-        // pega os dados que vieram na url caso o usuario tenha vindo do clique de comprar
+    // verifica se o formulario de orcamento existe na pagina atual
+    if (formOrcamento) {
         var urlParams = new URLSearchParams(window.location.search);
         var destinoUrl = urlParams.get("destino");
         var precoUrl = urlParams.get("preco");
         
         if (destinoUrl && precoUrl) {
-            // preenche o select
             var select = document.getElementById("destino");
             select.value = destinoUrl;
             
-            // define o valor global do pacote vindo da url
-            valorPacote = parseFloat(precoUrl);
+            val_pacote = parseFloat(precoUrl);
             
-            // roda a simulacao
+            // executa os calculos iniciais com os dados da url
             atualizarValores();
         }
     }
 });
 
-// funcao para calcular as parcelas e desconto do cupom
-function atualizarValores() {
-    var dest = document.getElementById("destino").value;
-    var boxSimulador = document.getElementById("box-simulador");
+// formata valores para reais de forma manual sem usar bibliotecas prontas do sistema
+function formatarDinheiro(valor) {
+    // arredonda para duas casas decimais
+    var valorArredondado = Math.round(valor * 100) / 100;
+    var partes = valorArredondado.toString().split(".");
+    var reais = partes[0];
+    var centavos = partes.length > 1 ? partes[1] : "00";
     
-    // se nao escolheu destino nao mostra a simulacao
-    if (dest === "") {
-        boxSimulador.style.display = "none";
+    // garante que os centavos sempre tenham 2 digitos
+    if (centavos.length === 1) {
+        centavos += "0";
+    }
+    
+    return reais + "," + centavos;
+}
+
+// calcula e atualiza o simulador financeiro na tela
+function atualizarValores() {
+    var dest_sel = document.getElementById("destino").value;
+    var box_financas = document.getElementById("box-simulador");
+    
+    if (dest_sel === "") {
+        box_financas.style.display = "none";
         return;
     }
     
-    // atualiza o valor baseado no destino caso o usuario mude manualmente pelo select
-    if (dest === "Rio de Janeiro") valorPacote = 990;
-    if (dest === "Gramado") valorPacote = 1500;
-    if (dest === "Paris") valorPacote = 5900;
+    // precos fixos definidos pela diretoria da agencia fortaleza para a temporada 2026
+    if (dest_sel === "Rio de Janeiro") val_pacote = 990.00;
+    if (dest_sel === "Gramado") val_pacote = 1500.00;
+    if (dest_sel === "Paris") val_pacote = 5900.00;
     
-    var total = valorPacote;
-    var parcelas = total / 10;
+    // calculo da regra de negocio: valor total soma a taxa de embarque obrigatoria
+    var total_final = val_pacote + TAXA_EMBARQUE;
+    var valor_parcela = total_final / 10;
     
-    // exibe a caixa de simulacao e insere os valores na tela
-    boxSimulador.style.display = "block";
-    document.getElementById("simular-valor-original").innerText = total.toFixed(2).replace(".", ",");
-    document.getElementById("simular-parcelas").innerText = parcelas.toFixed(2).replace(".", ",");
+    // bloco de atualizacao da interface
+    try {
+        box_financas.style.display = "block";
+        document.getElementById("simular-valor-original").innerText = formatarDinheiro(total_final);
+        document.getElementById("simular-parcelas").innerText = formatarDinheiro(valor_parcela);
+    } catch (e) {
+        console.warn("erro ao renderizar simulador na tela: " + e.message);
+    }
 }
 
-// funcao de validacao do formulario antes de enviar
+// validacoes de seguranca e integridade do formulario
 function validarFormulario(event) {
     event.preventDefault();
     
-    var nome = document.getElementById("nome").value;
-    var email = document.getElementById("email").value;
-    var dest = document.getElementById("destino").value;
+    var txt_nome = document.getElementById("nome").value;
+    var userEmail = document.getElementById("email").value;
+    var dest_sel = document.getElementById("destino").value;
     
-    // verifica se o nome esta vazio
-    if (nome.trim() == "") {
-        alert("Por favor, preencha o seu nome.");
+    // regra de negocio: o passageiro precisa preencher nome e sobrenome para emissao do bilhete
+    var nomeDividido = txt_nome.trim().split(" ");
+    if (nomeDividido.length < 2 || nomeDividido[0].length < 2) {
+        alert("erro de validacao: Insira seu nome completo (Nome e Sobrenome) para emissao do bilhete aereo.");
         return false;
     }
     
-    // validacao simples de email
-    if (email.trim() == "" || email.indexOf("@") == -1) {
-        alert("Por favor, insira um e-mail valido.");
+    // validacao de email basica obrigatoria
+    if (userEmail.trim() === "" || userEmail.indexOf("@") === -1) {
+        alert("erro de validacao: Insira um e-mail valido.");
         return false;
     }
     
-    // verifica se escolheu o destino
-    if (dest == "") {
-        alert("Por favor, selecione um destino de interesse.");
+    // impede emails de teste comuns de passarem para o banco da agencia
+    var emailBloqueado = userEmail.toLowerCase();
+    if (emailBloqueado.includes("teste@") || emailBloqueado.includes("admin@") || emailBloqueado.includes("email.com")) {
+        alert("erro de negocio: E-mails de teste ou temporarios nao sao aceitos pelo sistema da agencia.");
+        return false;
+    }
+    
+    if (dest_sel === "") {
+        alert("erro de validacao: Escolha o seu destino de viagem.");
         return false;
     }
 
-    // mensagem de sucesso final
-    alert("Mensagem enviada com sucesso! Obrigado pelo contato, " + nome + ".");
+    // confirmacao de dados salvos
+    alert("Orcamento enviado! Obrigado, " + txt_nome + ". Nossa equipe da Agencia Fortaleza entrara em contato no email: " + userEmail);
     
-    // reseta o formulario e esconde o simulador
+    // limpa o formulario e retorna a home
     document.getElementById("form_orc").reset();
-    document.getElementById("box-simulador").style.display = "none";
-    valorPacote = 0;
+    box_financas = document.getElementById("box-simulador");
+    if (box_financas) box_financas.style.display = "none";
+    val_pacote = 0;
     
-    // depois de enviar com sucesso, volta pra home do site
     window.location.href = "index.html";
     return true;
 }
