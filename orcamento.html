@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Solicitar Orçamento - Fortaleza</title>
+    <!-- css compartilhado das paginas -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- cabecalho do site -->
+    <header id="topoSite">
+        <div class="logo">
+            <h1>Agência Fortaleza</h1>
+        </div>
+        <!-- links de navegacao -->
+        <nav class="menu-nav">
+            <a href="index.html">Home</a>
+            <a href="destinos.html">Destinos</a>
+            <a href="orcamento.html" class="active">Orçamento</a>
+        </nav>
+    </header>
+
+    <!-- formulario de contato e simulador de parcelas -->
+    <section class="secao-contato">
+        <h2 class="titulo-secao">Fale Conosco / Orçamento</h2>
+        <p>Preencha os dados e simule o valor das parcelas com desconto:</p>
+
+        <form id="form_orc" onsubmit="return validarFormulario(event)">
+            <div class="campo_form">
+                <label for="nome">Seu Nome:</label>
+                <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo">
+            </div>
+
+            <div class="campo_form">
+                <label for="email">Seu E-mail:</label>
+                <input type="text" id="email" name="email" placeholder="nome@exemplo.com">
+            </div>
+
+            <div class="campo_form">
+                <label for="destino">Destino Desejado:</label>
+                <select id="destino" name="destino" onchange="atualizarValores()">
+                    <option value="">Selecione um destino...</option>
+                    <option value="Rio de Janeiro">Rio de Janeiro</option>
+                    <option value="Gramado">Gramado</option>
+                    <option value="Paris">Paris</option>
+                </select>
+            </div>
+
+            <!-- simulador de parcelas que mostra valores dinamicamente -->
+            <div class="campo_form" id="box-simulador"
+                style="display:none; background:#eee; padding:10px; border-radius:5px; margin-bottom:15px;">
+                <p style="margin:0 0 5px 0; font-weight:bold;">Simulador Financeiro:</p>
+                <div style="font-size: 14px;">
+                    Valor do Pacote: R$ <span id="simular-valor-original">0,00</span><br>
+                    Em até 10x de: <strong style="color: green;">R$ <span id="simular-parcelas">0,00</span></strong> sem
+                    juros!
+                </div>
+            </div>
+
+            <div class="campo_form">
+                <label for="mensagem">Mensagem:</label>
+                <textarea id="mensagem" name="mensagem"
+                    placeholder="Deixe suas duvidas sobre datas ou hotel..."></textarea>
+            </div>
+
+            <button type="submit" id="btn-env-form">Enviar Solicitação</button>
+        </form>
+    </section>
+
+    <!-- rodape simples da pagina -->
+    <footer>
+        <p>&copy; 2026 Agência Fortaleza. Trabalho de HTML.</p>
+    </footer>
+
+    <!-- js para rodar a simulacao e carregar dados da url -->
+    <script src="js/script.js"></script>
+</body>
+
+</html>

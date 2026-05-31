@@ -1,0 +1,200 @@
+/* estilos basicos de um site de estudante */
+/* prof de web design me cobrou organizacao mas fiz do meu jeito */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* estilo do cabecalho e topo */
+header {
+  background-color: #35424a;
+  color: #ffffff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0 0 10px 0;
+}
+
+/* links do menu */
+.menu-nav a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+.menu-nav a:hover,
+.menu-nav a.active {
+    color: #e8491d; /* destaque laranja quando passa o mouse ou pagina ativa */
+    border-bottom: 2px solid #e8491d;
+}
+
+/* banner da pagina inicial */
+.hero_banner {
+    background-color: #e8491d;
+    color: #ffffff;
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.hero_banner h2 {
+    margin-top: 0;
+    font-size: 32px;
+}
+
+/* botao verde/escuro do banner */
+.btn_home {
+    display: inline-block;
+    background-color: #35424a;
+    color: #ffffff;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+.btn_home:hover {
+    background-color: #ffffff;
+    color: #35424a;
+}
+
+/* titulo das secoes do site */
+.titulo-secao {
+    text-align: center;
+    margin-top: 40px;
+    color: #35424a;
+}
+
+/* grid de destinos (vitrine) */
+.vitrine-pacotes {
+    width: 95%;
+    max-width: 1050px;
+    margin: 0 auto;
+}
+
+/* cards alinhados de forma flex */
+.lista_packs {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.card-destino {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 290px;
+    margin: 15px;
+    padding: 15px;
+    text-align: center;
+}
+
+.img-card {
+    width: 100%;
+    height: 180px; /* travei a altura pras imagens nao ficarem tortas */
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.card-destino h3 {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+/* riscar preco antigo para parecer promocao */
+.preco-antigo {
+    font-size: 13px;
+    color: #999;
+    text-decoration: line-through;
+    margin: 5px 0 0 0;
+}
+
+.card-destino .preco {
+    font-size: 20px;
+    font-weight: bold;
+    color: #e8491d;
+    margin: 2px 0 10px 0;
+}
+
+/* botao de compra nos cards */
+.btn-compra {
+    background-color: #35424a;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+}
+
+.btn-compra:hover {
+    background-color: #e8491d;
+}
+
+/* secao do formulario */
+.secao-contato {
+    width: 90%;
+    max-width: 480px;
+    margin: 40px auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+/* espaco entre campos */
+.campo_form {
+    margin-bottom: 15px;
+}
+
+.campo_form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.campo_form input, .campo_form select, .campo_form textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* impede q o padding mude o tamanho do box */
+}
+
+/* botao enviar */
+#btn-env-form {
+    width: 100%;
+    background-color: #35424a;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#btn-env-form:hover {
+    background-color: #e8491d;
+}
+
+/* rodape fim de pagina */
+footer {
+    background-color: #35424a;
+    color: #ffffff;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 40px;
+    font-size: 12px;
+}

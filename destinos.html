@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Pacotes de Destinos - Fortaleza</title>
+  <!-- css compartilhado das paginas -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- cabecalho do site -->
+  <header id="topoSite">
+    <div class="logo">
+      <h1>Agência Fortaleza</h1>
+    </div>
+    <!-- links de navegacao -->
+    <nav class="menu-nav">
+      <a href="index.html">Home</a>
+      <a href="destinos.html" class="active">Destinos</a>
+      <a href="orcamento.html">Orçamento</a>
+    </nav>
+  </header>
+
+  <!-- vitrine com os cards dos pacotes -->
+  <section class="vitrine-pacotes">
+    <h2 class="titulo-secao">Pacotes em Destaque</h2>
+
+    <div class="lista_packs">
+      <!-- primeiro card (rio) -->
+      <div class="card-destino">
+        <img src="img/rio.jpg" alt="Rio de Janeiro" class="img-card">
+        <h3>Rio de Janeiro - RJ</h3>
+        <p>Pacote de 3 dias com hotel incluso.</p>
+        <p class="preco-antigo">De: R$ 1.200,00</p>
+        <p class="preco">Por: R$ 990,00</p>
+        <button class="btn-compra" onclick="comprar('Rio de Janeiro', 990)">Comprar</button>
+      </div>
+
+      <!-- segundo card (gramado) -->
+      <div class="card-destino">
+        <img src="img/gramado.jpg" alt="Gramado" class="img-card">
+        <h3>Gramado - RS</h3>
+        <p>Pacote de 4 dias para curtir o frio gaúcho.</p>
+        <p class="preco-antigo">De: R$ 1.800,00</p>
+        <p class="preco">Por: R$ 1.500,00</p>
+        <button class="btn-compra" onclick="comprar('Gramado', 1500)">Comprar</button>
+      </div>
+
+      <!-- terceiro card (paris) -->
+      <div class="card-destino">
+        <img src="img/paris.jpg" alt="Paris" class="img-card">
+        <h3>Paris - França</h3>
+        <p>Pacote de 7 dias com passagem e hospedagem.</p>
+        <p class="preco-antigo">De: R$ 6.500,00</p>
+        <p class="preco">Por: R$ 5.900,00</p>
+        <button class="btn-compra" onclick="comprar('Paris', 5900)">Comprar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- rodape simples da pagina -->
+  <footer>
+    <p>&copy; 2026 Agência Fortaleza. Trabalho de HTML.</p>
+  </footer>
+
+  <!-- js para lidar com o redirecionamento -->
+  <script src="js/script.js"></script>
+</body>
+
+</html>
